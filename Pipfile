@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-purehash = "*"
+purehash = "==1.1.0"
 
 [dev-packages]
 pre-commit = "<2.16.0"
