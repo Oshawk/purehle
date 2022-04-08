@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from purehash import md5
 from purehash._util import padding, unpack
 
