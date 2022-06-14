@@ -1,7 +1,7 @@
 from purehash import sha256, sha512
 
-from purehle.algorithms._sha2 import SHA256, SHA512
 from purehle._util import random_tests
+from purehle.algorithms._sha2 import SHA256, SHA512
 
 
 def test_sha256():
