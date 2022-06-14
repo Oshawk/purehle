@@ -64,9 +64,10 @@ def cli():
     padding, hash_ = hle(arguments.digest, original).with_length(arguments.length)
 
     hash_.update(append)
+    print(f"Hash (hex): {hash_.hexdigest()}")
+    print(f"Hash (bytes): {hash_.digest()}")
 
-    print(hash_.hexdigest())
-    print(original + padding + append)
+    data: bytes = original + padding + append
+    print(f"Data (hex): {data.hex()}")
+    print(f"Data (bytes): {data}")
 
-
-cli()
