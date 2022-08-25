@@ -30,4 +30,5 @@ setup(
         "dev": ["pre-commit", "black", "mypy", "twine"],
         "test": ["pytest"],
     },
+    entry_points={"console_scripts": ["purehle=purehle._cli:cli"]},
 )
