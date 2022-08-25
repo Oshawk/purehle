@@ -17,7 +17,14 @@ DIGEST_LENGTHS: dict[int, tuple[Type[HLE], ...]] = {
 }
 
 
-def cli():
+def encode(string: str, encoding: str) -> bytes:
+    if encoding.lower() == "hex":
+        return bytes.fromhex(string)
+    else:
+        return string.encode(encoding)
+
+
+def cli() -> None:
     parser = ArgumentParser()
 
     parser.add_argument(
@@ -34,7 +41,7 @@ def cli():
     if len(arguments.digest) not in DIGEST_LENGTHS:
         raise ValueError(f"Digest length {len(arguments.digest)} not supported.")
 
-    hles: tuple[Type[HLE]] = DIGEST_LENGTHS[len(arguments.digest)]
+    hles: tuple[Type[HLE], ...] = DIGEST_LENGTHS[len(arguments.digest)]
     hle: Type[HLE]
     if arguments.type is None:
         hle = hles[0]
@@ -54,10 +61,12 @@ def cli():
             if hle.__name__.upper() == arguments.type.upper():
                 break
         else:
-            raise ValueError(f"Hash type {arguments.type} does not exist for digest length {len(arguments.digest)}.")
+            raise ValueError(
+                f"Hash type {arguments.type} does not exist for digest length {len(arguments.digest)}."
+            )
 
-    original: bytes = arguments.original.encode(arguments.encoding)
-    append: bytes = arguments.append.encode(arguments.encoding)
+    original: bytes = encode(arguments.original, arguments.encoding)
+    append: bytes = encode(arguments.append, arguments.encoding)
 
     padding: bytes
     hash_: Hash
@@ -65,9 +74,8 @@ def cli():
 
     hash_.update(append)
     print(f"Hash (hex): {hash_.hexdigest()}")
-    print(f"Hash (bytes): {hash_.digest()}")
+    print(f"Hash (bytes): {hash_.digest()!r}")
 
     data: bytes = original + padding + append
     print(f"Data (hex): {data.hex()}")
-    print(f"Data (bytes): {data}")
-
+    print(f"Data (bytes): {data!r}")
