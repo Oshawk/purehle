@@ -5,7 +5,7 @@ project_directory = Path(__file__).parent.resolve()
 
 setup(
     name="purehle",
-    version="1.0.0",
+    version="1.0.1",
     description="Pure Python hash length extension.",
     long_description=(project_directory / "README.md").read_text("utf-8"),
     long_description_content_type="text/markdown",
